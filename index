@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nusantara Heritage - Media Pembelajaran Sejarah Interaktif Kelas X</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Fredoka & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Fredoka', 'sans-serif'],
+                        body: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        pastel: {
+                            blue: '#E0F2FE',
+                            indigo: '#EEF2FF',
+                            purple: '#F3E8FF',
+                            pink: '#FCE7F3',
+                            amber: '#FEF3C7',
+                            emerald: '#D1FAE5',
+                            cream: '#FFFBEB'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FAF5FF;
+        }
+        h1, h2, h3, h4, .font-fun {
+            font-family: 'Fredoka', cursive;
+        }
+        .tab-btn.active {
+            background-color: #4F46E5;
+            color: #ffffff;
+            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+            transform: translateY(-2px);
+        }
+        .bubble-card {
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .bubble-card:hover {
+            transform: translateY(-6px) scale(1.02);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #F3E8FF;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #C084FC;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #A855F7;
+        }
+    </style>
+</head>
+<body class="text-slate-700 antialiased min-h-screen flex flex-col justify-between selection:bg-pink-200 selection:text-indigo-900">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white shadow-xl sticky top-0 z-50 rounded-b-3xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-amber-300 p-2.5 rounded-2xl text-indigo-950 font-bold text-2xl shadow-md rotate-3 hover:rotate-0 transition-transform">
+                    🗿
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-xl sm:text-2xl tracking-wide leading-none flex items-center gap-2">
+                        Nusantara Heritage <span class="text-amber-300 text-xs bg-indigo-950/40 px-2.5 py-1 rounded-full font-body font-semibold">Kelas X</span>
+                    </h1>
+                    <p class="text-xs text-pink-100 font-medium mt-1">Petualangan Sejarah Interaktif • Deep Learning</p>
+                </div>
+            </div>
+            
+            <div class="mt-2 sm:mt-0 flex items-center space-x-2">
+                <span class="bg-white/20 backdrop-blur-md text-white text-xs px-3.5 py-1.5 rounded-full border border-white/30 flex items-center gap-1.5 font-semibold">
+                    <i class="fa-solid fa-wand-magic-sparkles text-amber-300"></i> Mode Belajar Asyik
+                </span>
+            </div>
+        </div>
+        
+        <!-- NAV TABS -->
+        <nav class="bg-indigo-950/30 backdrop-blur-md px-4 rounded-b-3xl border-t border-white/10">
+            <div class="max-w-7xl mx-auto flex space-x-2 overflow-x-auto py-2.5 text-xs sm:text-sm font-semibold custom-scrollbar">
+                <button onclick="switchTab('beranda')" id="tab-beranda" class="tab-btn active px-4 py-2 rounded-2xl transition-all flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-house text-amber-300"></i> Beranda & Orientasi
+                </button>
+                <button onclick="switchTab('memahami')" id="tab-memahami" class="tab-btn px-4 py-2 rounded-2xl transition-all flex items-center gap-2 text-indigo-100 hover:text-white hover:bg-white/10 whitespace-nowrap">
+                    <i class="fa-solid fa-map-location-dot text-sky-300"></i> 1. Memahami & Galeri
+                </button>
+                <button onclick="switchTab('mengaplikasi')" id="tab-mengaplikasi" class="tab-btn px-4 py-2 rounded-2xl transition-all flex items-center gap-2 text-indigo-100 hover:text-white hover:bg-white/10 whitespace-nowrap">
+                    <i class="fa-solid fa-users-viewfinder text-emerald-300"></i> 2. Mengaplikasi
+                </button>
+                <button onclick="switchTab('merefleksi')" id="tab-merefleksi" class="tab-btn px-4 py-2 rounded-2xl transition-all flex items-center gap-2 text-indigo-100 hover:text-white hover:bg-white/10 whitespace-nowrap">
+                    <i class="fa-solid fa-heart text-pink-300"></i> 3. Merefleksi
+                </button>
+                <button onclick="switchTab('game')" id="tab-game" class="tab-btn px-4 py-2 rounded-2xl transition-all flex items-center gap-2 text-indigo-100 hover:text-white hover:bg-white/10 whitespace-nowrap">
+                    <i class="fa-solid fa-gamepad text-amber-300"></i> Kuis Fun Game
+                </button>
+                <button onclick="switchTab('tanya-guru')" id="tab-tanya-guru" class="tab-btn px-4 py-2 rounded-2xl transition-all flex items-center gap-2 text-indigo-100 hover:text-white hover:bg-white/10 whitespace-nowrap">
+                    <i class="fa-solid fa-robot text-purple-300"></i> Tanya Guru AI
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+
+        <!-- SECTION 0: BERANDA & ORIENTASI -->
+        <section id="sec-beranda" class="space-y-8">
+            <!-- Hero Banner -->
+            <div class="bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-500 text-white rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 opacity-20 text-[180px] select-none">🛕</div>
+                <div class="relative z-10 max-w-3xl">
+                    <span class="bg-amber-300 text-indigo-950 font-bold text-xs uppercase px-3.5 py-1.5 rounded-full tracking-wider shadow-sm">
+                        ✨ Modul Ajar Deep Learning SMA Kelas X
+                    </span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold mt-4 mb-3 leading-tight font-fun">
+                        Menjelajah Kejayaan Hindu-Buddha & Jejaknya Hari Ini! 🌟
+                    </h2>
+                    <p class="text-purple-100 text-sm sm:text-base leading-relaxed mb-8">
+                        Tahukah kamu kalau semboyan <i>"Bhinneka Tunggal Ika"</i>, istilah <i>"Pancasila"</i>, hingga sistem pengelolaan air dan pelabuhan modern berasal dari warisan kerajaan Hindu-Buddha? Yuk, jelajahi kisah serunya!
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <button onclick="switchTab('memahami')" class="bg-amber-400 hover:bg-amber-300 text-indigo-950 font-extrabold px-6 py-3.5 rounded-2xl shadow-xl transition-all transform hover:scale-105 flex items-center gap-2 font-fun text-base">
+                            🚀 Mulai Petualangan!
+                        </button>
+                        <button onclick="openModalGuru()" class="bg-white/20 hover:bg-white/30 text-white font-semibold px-5 py-3.5 rounded-2xl border border-white/30 backdrop-blur-md transition-all text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-graduation-cap"></i> Panduan Guru & Diferensiasi
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alur Deep Learning 3M (Cute Cards) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-3xl border-2 border-sky-100 shadow-xl shadow-sky-50 bubble-card relative overflow-hidden">
+                    <div class="w-14 h-14 bg-sky-100 text-sky-600 rounded-2xl flex items-center justify-center font-bold text-2xl mb-4 font-fun">
+                        1 💡
+                    </div>
+                    <h3 class="font-bold text-xl text-slate-800 mb-2 font-fun">Memahami (Understand)</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Menghubungkan prasasti, candi, dan kitab kuno dari Kutai hingga Majapahit dengan kosakata & gaya hidup modernmu!
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl border-2 border-emerald-100 shadow-xl shadow-emerald-50 bubble-card relative overflow-hidden">
+                    <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center font-bold text-2xl mb-4 font-fun">
+                        2 🤝
+                    </div>
+                    <h3 class="font-bold text-xl text-slate-800 mb-2 font-fun">Mengaplikasi (Apply)</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Tugas kelompok seru berdiferensiasi: Membuat komik infografis, rekaman podcast drama, atau analisis toleransi sosial.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl border-2 border-pink-100 shadow-xl shadow-pink-50 bubble-card relative overflow-hidden">
+                    <div class="w-14 h-14 bg-pink-100 text-pink-600 rounded-2xl flex items-center justify-center font-bold text-2xl mb-4 font-fun">
+                        3 ❤️
+                    </div>
+                    <h3 class="font-bold text-xl text-slate-800 mb-2 font-fun">Merefleksi (Reflect)</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Mengambil nilai positif toleransi, kerja keras, dan keterbukaan dari para pendahulu Nusantara untuk bekal hidupmu.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 1: MEMAHAMI & GALERI PENINGGALAN KERBAIKAN -->
+        <section id="sec-memahami" class="hidden space-y-8">
+            <!-- Title Header -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border-2 border-purple-100 shadow-lg">
+                <div class="flex items-center space-x-3 mb-3">
+                    <span class="bg-sky-100 text-sky-800 font-bold px-4 py-1.5 rounded-full text-xs font-fun">Tahap 1: Memahami</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-800 font-fun">Galeri Peninggalan & Relevansi Sehari-hari 🖼️</h2>
+                </div>
+                <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                    Eksplorasi artefak peninggalan kerajaan Hindu-Buddha berdasarkan periode sejarahnya. Klik atau amati peninggalannya untuk menemukan kisah menarik di baliknya!
+                </p>
+            </div>
+
+            <!-- PERIODE 1: AWAL NUSANTARA (ABAD 4 - 5 M) -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-3">
+                    <span class="bg-amber-400 text-indigo-950 font-bold px-3.5 py-1 rounded-2xl text-xs font-fun">PERIODE 1</span>
+                    <h3 class="text-xl font-bold text-indigo-900 font-fun">Kerajaan Kutai & Tarumanagara (Abad 4–5 M)</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Prasasti Yupa -->
+                    <div class="bg-white rounded-3xl border-2 border-amber-100 p-6 shadow-md hover:shadow-xl transition-all bubble-card flex flex-col sm:flex-row gap-5 items-center">
+                        <div class="w-full sm:w-48 h-48 bg-amber-50 rounded-2xl flex-shrink-0 flex flex-col items-center justify-center p-3 text-center border border-amber-200">
+                            <!-- SVG Representation of Yupa Prasasti -->
+                            <svg class="w-24 h-24 text-amber-700 mb-1" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M30 15 C35 10, 65 10, 70 15 L75 85 C70 90, 30 90, 25 85 Z" fill="#D97706" stroke="#92400E" stroke-width="3"/>
+                                <line x1="38" y1="30" x2="62" y2="30" stroke="#FEF3C7" stroke-width="2" stroke-linecap="round"/>
+                                <line x1="35" y1="40" x2="65" y2="40" stroke="#FEF3C7" stroke-width="2" stroke-linecap="round"/>
+                                <line x1="37" y1="50" x2="63" y2="50" stroke="#FEF3C7" stroke-width="2" stroke-linecap="round"/>
+                                <line x1="36" y1="60" x2="60" y2="60" stroke="#FEF3C7" stroke-width="2" stroke-linecap="round"/>
+                                <line x1="40" y1="70" x2="58" y2="70" stroke="#FEF3C7" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            <span class="text-xs font-bold text-amber-900 font-fun">Prasasti Yupa</span>
+                            <span class="text-[10px] text-amber-700">Kutai, Kalimantan Timur</span>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="bg-amber-100 text-amber-800 text-[11px] font-bold px-2.5 py-0.5 rounded-full">Aksara Pallawa & Sanskerta</span>
+                            <h4 class="font-bold text-slate-800 text-lg font-fun">Bukti Sejarah Tulis Pertama</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Tiang batu yang mencatat kedermawanan Raja Mulawarman menyedekahkan 20.000 ekor sapi kepada kaum Brahmana.
+                            </p>
+                            <div class="bg-amber-50/80 p-3 rounded-2xl text-xs text-amber-900 border border-amber-200/60 mt-2">
+                                <strong>💡 Relevansi Sekarang:</strong> Nilai kedermawanan, kepedulian sosial, serta pentingnya literasi/catatan tertulis dalam pemerintahan.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Prasasti Ciaruteun -->
+                    <div class="bg-white rounded-3xl border-2 border-emerald-100 p-6 shadow-md hover:shadow-xl transition-all bubble-card flex flex-col sm:flex-row gap-5 items-center">
+                        <div class="w-full sm:w-48 h-48 bg-emerald-50 rounded-2xl flex-shrink-0 flex flex-col items-center justify-center p-3 text-center border border-emerald-200">
+                            <!-- SVG Representation of Ciaruteun -->
+                            <svg class="w-24 h-24 text-emerald-700 mb-1" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 40 Q50 20 80 40 Q85 70 75 80 Q50 90 20 75 Z" fill="#059669" stroke="#065F46" stroke-width="3"/>
+                                <!-- Footprints -->
+                                <ellipse cx="40" cy="55" rx="6" ry="12" fill="#D1FAE5"/>
+                                <ellipse cx="60" cy="55" rx="6" ry="12" fill="#D1FAE5"/>
+                                <circle cx="40" cy="40" r="2" fill="#D1FAE5"/>
+                                <circle cx="60" cy="40" r="2" fill="#D1FAE5"/>
+                            </svg>
+                            <span class="text-xs font-bold text-emerald-900 font-fun">Prasasti Ciaruteun</span>
+                            <span class="text-[10px] text-emerald-700">Tarumanagara, Bogor</span>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2.5 py-0.5 rounded-full">Manajemen Tata Air</span>
+                            <h4 class="font-bold text-slate-800 text-lg font-fun">Telapak Kaki Raja Purnawarman</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Melukiskan cetakan kaki raja seperti Dewa Wisnu. Raja Purnawarman membangun Sungai Gomati sepanjang 12 km untuk cegah banjir.
+                            </p>
+                            <div class="bg-emerald-50/80 p-3 rounded-2xl text-xs text-emerald-900 border border-emerald-200/60 mt-2">
+                                <strong>💡 Relevansi Sekarang:</strong> Pentingnya tata kelola sungai dan infrastruktur penanggulangan banjir di kota modern.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PERIODE 2: KEJAYAAN MARITIM & CANDI (ABAD 7 - 10 M) -->
+            <div class="space-y-4 pt-4">
+                <div class="flex items-center gap-3">
+                    <span class="bg-sky-400 text-indigo-950 font-bold px-3.5 py-1 rounded-2xl text-xs font-fun">PERIODE 2</span>
+                    <h3 class="text-xl font-bold text-indigo-900 font-fun">Sriwijaya & Mataram Kuno (Abad 7–10 M)</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Perahu Cadik Sriwijaya -->
+                    <div class="bg-white rounded-3xl border-2 border-sky-100 p-6 shadow-md hover:shadow-xl transition-all bubble-card flex flex-col justify-between">
+                        <div>
+                            <div class="w-full h-40 bg-sky-50 rounded-2xl flex flex-col items-center justify-center p-3 text-center border border-sky-200 mb-4">
+                                <svg class="w-20 h-20 text-sky-600" viewBox="0 0 100 100" fill="none">
+                                    <path d="M10 65 Q50 85 90 65 L80 50 L20 50 Z" fill="#0284C7"/>
+                                    <path d="M50 15 L50 50 M50 20 L75 35 L50 35" stroke="#0369A1" stroke-width="3" fill="#E0F2FE"/>
+                                    <path d="M5 75 L95 75" stroke="#38BDF8" stroke-width="3" stroke-dasharray="4"/>
+                                </svg>
+                                <span class="text-xs font-bold text-sky-900 font-fun">Armada Laut Sriwijaya</span>
+                            </div>
+                            <span class="bg-sky-100 text-sky-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Poros Maritim Dunia</span>
+                            <h4 class="font-bold text-slate-800 text-base mt-1 font-fun">Penguasa Selat Malaka</h4>
+                            <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                                Sriwijaya menjadi pusat perdagangan internasional & pusat belajar ilmu agama Buddha di Asia Tenggara.
+                            </p>
+                        </div>
+                        <div class="bg-sky-50/80 p-3 rounded-2xl text-[11px] text-sky-900 border border-sky-200/60 mt-3">
+                            <strong>💡 Relevansi:</strong> Kedudukan strategis laut Indonesia dalam ekonomi global modern.
+                        </div>
+                    </div>
+
+                    <!-- Candi Borobudur -->
+                    <div class="bg-white rounded-3xl border-2 border-indigo-100 p-6 shadow-md hover:shadow-xl transition-all bubble-card flex flex-col justify-between">
+                        <div>
+                            <div class="w-full h-40 bg-indigo-50 rounded-2xl flex flex-col items-center justify-center p-3 text-center border border-indigo-200 mb-4">
+                                <svg class="w-20 h-20 text-indigo-600" viewBox="0 0 100 100" fill="none">
+                                    <path d="M15 75 L85 75 L75 55 L25 55 Z" fill="#6366F1"/>
+                                    <path d="M25 55 L75 55 L65 38 L35 38 Z" fill="#4F46E5"/>
+                                    <path d="M35 38 L65 38 L50 20 Z" fill="#3730A3"/>
+                                    <circle cx="50" cy="18" r="4" fill="#EEF2FF"/>
+                                </svg>
+                                <span class="text-xs font-bold text-indigo-900 font-fun">Candi Borobudur</span>
+                            </div>
+                            <span class="bg-indigo-100 text-indigo-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Mahakarya Buddha</span>
+                            <h4 class="font-bold text-slate-800 text-base mt-1 font-fun">Arsitektur & Astronomi Kuno</h4>
+                            <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                                Dibangun Wangsa Syailendra tanpa semen. Memiliki relief detail yang menggambarkan sains dan sosial.
+                            </p>
+                        </div>
+                        <div class="bg-indigo-50/80 p-3 rounded-2xl text-[11px] text-indigo-900 border border-indigo-200/60 mt-3">
+                            <strong>💡 Relevansi:</strong> Warisan Dunia UNESCO & penggerak industri ekonomi kreatif pariwisata.
+                        </div>
+                    </div>
+
+                    <!-- Candi Prambanan -->
+                    <div class="bg-white rounded-3xl border-2 border-pink-100 p-6 shadow-md hover:shadow-xl transition-all bubble-card flex flex-col justify-between">
+                        <div>
+                            <div class="w-full h-40 bg-pink-50 rounded-2xl flex flex-col items-center justify-center p-3 text-center border border-pink-200 mb-4">
+                                <svg class="w-20 h-20 text-pink-600" viewBox="0 0 100 100" fill="none">
+                                    <path d="M40 80 L60 80 L55 30 L45 30 Z" fill="#EC4899"/>
+                                    <path d="M45 30 L55 30 L50 10 Z" fill="#BE185D"/>
+                                    <path d="M20 80 L35 80 L30 45 L25 45 Z" fill="#F472B6"/>
+                                    <path d="M65 80 L80 80 L75 45 L70 45 Z" fill="#F472B6"/>
+                                </svg>
+                                <span class="text-xs font-bold text-pink-900 font-fun">Candi Prambanan</span>
+                            </div>
+                            <span class="bg-pink-100 text-pink-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Toleransi Beragama</span>
+                            <h4 class="font-bold text-slate-800 text-base mt-1 font-fun">Candi Trimurti Hindu</h4>
+                            <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                                Didirikan Wangsa Sanjaya berdekatan dengan Borobudur, wujud tingginya toleransi agama masa itu.
+                            </p>
+                        </div>
+                        <div class="bg-pink-50/80 p-3 rounded-2xl text-[11px] text-pink-900 border border-pink-200/60 mt-3">
+                            <strong>💡 Relevansi:</strong> Bukti persatuan dan keharmonisan dalam perbedaan keyakinan.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PERIODE 3: PUNCAK NUSANTARA - MAJAPAHIT (ABAD 13 - 16 M) -->
+            <div class="space-y-4 pt-4">
+                <div class="flex items-center gap-3">
+                    <span class="bg-purple-400 text-indigo-950 font-bold px-3.5 py-1 rounded-2xl text-xs font-fun">PERIODE 3</span>
+                    <h3 class="text-xl font-bold text-indigo-900 font-fun">Kerajaan Majapahit (Abad 13–16 M)</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Gapura Wringin Lawang -->
+                    <div class="bg-white rounded-3xl border-2 border-purple-100 p-6 shadow-md hover:shadow-xl transition-all bubble-card flex flex-col sm:flex-row gap-5 items-center">
+                        <div class="w-full sm:w-48 h-48 bg-purple-50 rounded-2xl flex-shrink-0 flex flex-col items-center justify-center p-3 text-center border border-purple-200">
+                            <svg class="w-24 h-24 text-purple-700 mb-1" viewBox="0 0 100 100" fill="none">
+                                <path d="M20 85 L40 85 L40 20 L20 30 Z" fill="#8B5CF6"/>
+                                <path d="M60 85 L80 85 L80 30 L60 20 Z" fill="#8B5CF6"/>
+                                <path d="M40 85 L60 85 L60 75 L40 75 Z" fill="#DDD6FE"/>
+                            </svg>
+                            <span class="text-xs font-bold text-purple-900 font-fun">Candi Bentar Majapahit</span>
+                            <span class="text-[10px] text-purple-700">Trowulan, Jawa Timur</span>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="bg-purple-100 text-purple-800 text-[11px] font-bold px-2.5 py-0.5 rounded-full">Seni Arsitektur Bata Merah</span>
+                            <h4 class="font-bold text-slate-800 text-lg font-fun">Gapura Terbelah (Wringin Lawang)</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Gerbang pintu masuk ibu kota Majapahit. Struktur ini menjadi inspirasi utama pintu gerbang rumah adat dan tempat ibadah di Bali & Jawa hari ini.
+                            </p>
+                            <div class="bg-purple-50/80 p-3 rounded-2xl text-xs text-purple-900 border border-purple-200/60 mt-2">
+                                <strong>💡 Relevansi Sekarang:</strong> Desain gapura khas daerah di berbagai kantor pemerintahan modern Indonesia.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kitab Sutasoma -->
+                    <div class="bg-white rounded-3xl border-2 border-rose-100 p-6 shadow-md hover:shadow-xl transition-all bubble-card flex flex-col sm:flex-row gap-5 items-center">
+                        <div class="w-full sm:w-48 h-48 bg-rose-50 rounded-2xl flex-shrink-0 flex flex-col items-center justify-center p-3 text-center border border-rose-200">
+                            <svg class="w-24 h-24 text-rose-600 mb-1" viewBox="0 0 100 100" fill="none">
+                                <rect x="20" y="25" width="60" height="50" rx="5" fill="#F43F5E"/>
+                                <rect x="25" y="30" width="50" height="40" rx="3" fill="#FFE4E6"/>
+                                <line x1="32" y1="40" x2="68" y2="40" stroke="#E11D48" stroke-width="2"/>
+                                <line x1="32" y1="50" x2="68" y2="50" stroke="#E11D48" stroke-width="2"/>
+                                <line x1="32" y1="60" x2="55" y2="60" stroke="#E11D48" stroke-width="2"/>
+                            </svg>
+                            <span class="text-xs font-bold text-rose-900 font-fun">Kitab Sutasoma</span>
+                            <span class="text-[10px] text-rose-700">Karya Mpu Tantular</span>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="bg-rose-100 text-rose-800 text-[11px] font-bold px-2.5 py-0.5 rounded-full">Lahirnya Semboyan Bangsa</span>
+                            <h4 class="font-bold text-slate-800 text-lg font-fun">Bhinneka Tunggal Ika</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Kalimat lengkap: <i>"Bhinneka Tunggal Ika Tan Hana Dharma Mangrwa"</i> (Berbeda-beda tetapi tetap satu, tidak ada kebenaran yang mendua).
+                            </p>
+                            <div class="bg-rose-50/80 p-3 rounded-2xl text-xs text-rose-900 border border-rose-200/60 mt-2">
+                                <strong>💡 Relevansi Sekarang:</strong> Semboyan pemersatu seluruh suku, bahasa, dan agama dalam bingkai NKRI.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: MENGAPLIKASI (AKTIVITAS KOLABORATIF) -->
+        <section id="sec-mengaplikasi" class="hidden space-y-8">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border-2 border-emerald-100 shadow-lg">
+                <div class="flex items-center space-x-3 mb-2">
+                    <span class="bg-emerald-100 text-emerald-800 font-bold px-4 py-1.5 rounded-full text-xs font-fun">Tahap 2: Mengaplikasi</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-800 font-fun">Aktivitas Kolaborasi Kelompok 🤝</h2>
+                </div>
+                <p class="text-slate-600 text-sm mb-6">
+                    Pilih tantangan yang paling disukai oleh kelompokmu sesuai dengan gaya belajar dan minat kalian!
+                </p>
+
+                <!-- 3 Options based on readiness -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Level A -->
+                    <div class="border-2 border-emerald-200 rounded-3xl p-6 hover:border-emerald-500 transition-all bubble-card bg-emerald-50/30 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="bg-emerald-200 text-emerald-900 font-bold text-xs px-3 py-1 rounded-full font-fun">Level A: Visual Kreatif 🎨</span>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-lg mb-2 font-fun">Komik / Infografis Digital</h3>
+                            <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                                Buatlah komik pendek 4 panel tentang kisah kehidupan masyarakat Tarumanagara saat bahu-membahu membangun saluran air Gomati demi mencegah banjir!
+                            </p>
+                        </div>
+                        <button onclick="pilihTugas('Komik Infografis Tarumanagara')" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs py-3 rounded-2xl transition-all shadow-md font-fun">
+                            ✨ Pilih Tantangan Ini
+                        </button>
+                    </div>
+
+                    <!-- Level B -->
+                    <div class="border-2 border-sky-200 rounded-3xl p-6 hover:border-sky-500 transition-all bubble-card bg-sky-50/30 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="bg-sky-200 text-sky-900 font-bold text-xs px-3 py-1 rounded-full font-fun">Level B: Storytelling 🎙️</span>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-lg mb-2 font-fun">Podcast Roleplay Diplomasi</h3>
+                            <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                                Ream audio/dialog drama peragaan suasana Pelabuhan Tuban/Sriwijaya saat terjadi negosiasi dagang rempah-rempah antar pedagang mancanegara.
+                            </p>
+                        </div>
+                        <button onclick="pilihTugas('Podcast Roleplay Pelabuhan')" class="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs py-3 rounded-2xl transition-all shadow-md font-fun">
+                            ✨ Pilih Tantangan Ini
+                        </button>
+                    </div>
+
+                    <!-- Level C -->
+                    <div class="border-2 border-purple-200 rounded-3xl p-6 hover:border-purple-500 transition-all bubble-card bg-purple-50/30 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="bg-purple-200 text-purple-900 font-bold text-xs px-3 py-1 rounded-full font-fun">Level C: Analitis 📝</span>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-lg mb-2 font-fun">Kajian Toleransi Sekolah</h3>
+                            <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                                Buatlah analisis singkat tentang makna *Bhinneka Tunggal Ika* dari Kitab Sutasoma, lalu rumuskan aksi nyata untuk mencegah *bullying* di sekolah.
+                            </p>
+                        </div>
+                        <button onclick="pilihTugas('Kajian Toleransi Sutasoma')" class="w-full bg-purple-500 hover:bg-purple-600 text-white font-bold text-xs py-3 rounded-2xl transition-all shadow-md font-fun">
+                            ✨ Pilih Tantangan Ini
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Workspace Interactive Submit -->
+                <div id="workspace-kolaborasi" class="mt-8 bg-slate-50 p-6 sm:p-8 rounded-3xl border-2 border-slate-200">
+                    <h3 class="font-bold text-slate-800 text-lg mb-2 flex items-center gap-2 font-fun">
+                        <i class="fa-solid fa-pen-ruler text-indigo-600"></i> Lembar Kerja Kelompok (Live Input)
+                    </h3>
+                    <p class="text-xs text-slate-500 mb-4">Tuliskan ide awal proyek kelompokmu di bawah ini!</p>
+                    
+                    <div class="space-y-4 text-xs sm:text-sm">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1">Nama Kelompok & Anggota:</label>
+                                <input type="text" id="input-kelompok" placeholder="Contoh: Tim Gajah Mada (Siti, Agus, Budi)" class="w-full p-3 rounded-2xl border-2 border-slate-200 focus:border-indigo-500 outline-none transition-all">
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1">Tugas Yang Dipilih:</label>
+                                <input type="text" id="input-jenis-tugas" readonly placeholder="Klik tombol 'Pilih Tantangan' di atas" class="w-full p-3 rounded-2xl border-2 border-slate-200 bg-slate-100 text-slate-600 font-semibold">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Rancangan Gagasan Kelompok:</label>
+                            <textarea id="input-gagasan" rows="4" placeholder="Tuliskan poin ide, pembagian tugas anggota, atau draf skrip kelompokmu..." class="w-full p-3.5 rounded-2xl border-2 border-slate-200 focus:border-indigo-500 outline-none transition-all"></textarea>
+                        </div>
+
+                        <button onclick="simpanKerjaKelompok()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-2xl text-xs sm:text-sm transition-all shadow-lg font-fun flex items-center gap-2">
+                            💾 Simpan Draf Kolaborasi
+                        </button>
+                    </div>
+
+                    <div id="notif-simpan" class="hidden mt-4 p-4 bg-emerald-100 text-emerald-900 text-xs sm:text-sm rounded-2xl border-2 border-emerald-300 font-medium">
+                        🎉 YAY! Draf karya kelompokmu berhasil disimpan. Siap dipresentasikan!
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: MEREFLEKSI -->
+        <section id="sec-merefleksi" class="hidden space-y-8">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border-2 border-pink-100 shadow-lg">
+                <div class="flex items-center space-x-3 mb-2">
+                    <span class="bg-pink-100 text-pink-800 font-bold px-4 py-1.5 rounded-full text-xs font-fun">Tahap 3: Merefleksi</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-800 font-fun">Refleksi Pemaknaan Diri ❤️</h2>
+                </div>
+                <p class="text-slate-600 text-sm mb-6">
+                    Sejarah mengajari kita cara bersikap hari ini. Luapkan pemikiran jujurmu pada lembar jurnal refleksi berikut!
+                </p>
+
+                <div class="bg-pink-50/50 p-6 sm:p-8 rounded-3xl border-2 border-pink-100 space-y-6">
+                    <!-- Pertanyaan Refleksi 1 -->
+                    <div>
+                        <label class="block font-bold text-slate-800 text-sm sm:text-base mb-2 font-fun">
+                            1. Nilai karakter apa dari kerajaan Hindu-Buddha (seperti kejujuran, kedermawanan, keberanian, atau keterbukaan) yang ingin kamu terapkan dalam mengejar cita-citamu?
+                        </label>
+                        <textarea id="refleksi-1" rows="3" placeholder="Tuliskan jawaban perenunganmu..." class="w-full p-3.5 rounded-2xl border-2 border-pink-200 text-xs sm:text-sm focus:border-pink-500 outline-none transition-all bg-white"></textarea>
+                    </div>
+
+                    <!-- Pertanyaan Refleksi 2 -->
+                    <div>
+                        <label class="block font-bold text-slate-800 text-sm sm:text-base mb-2 font-fun">
+                            2. Bagaimana caramu merawat nilai "Bhinneka Tunggal Ika" di tengah keberagaman suku, agama, dan latar belakang teman-teman di lingkungan sekolahmu?
+                        </label>
+                        <textarea id="refleksi-2" rows="3" placeholder="Tuliskan jawaban perenunganmu..." class="w-full p-3.5 rounded-2xl border-2 border-pink-200 text-xs sm:text-sm focus:border-pink-500 outline-none transition-all bg-white"></textarea>
+                    </div>
+
+                    <button onclick="simpanRefleksi()" class="bg-pink-500 hover:bg-pink-600 text-white font-bold px-6 py-3 rounded-2xl text-xs sm:text-sm transition-all shadow-lg font-fun flex items-center gap-2">
+                        💖 Kirim Jurnal Refleksi Saya
+                    </button>
+
+                    <div id="notif-refleksi" class="hidden p-4 bg-pink-100 text-pink-900 text-xs sm:text-sm rounded-2xl border-2 border-pink-300 font-medium">
+                        ✨ Wah, refleksi yang sangat indah! Pemikiranmu menunjukkan rasa cinta yang besar terhadap keberagaman bangsa.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: FUN GAME KUIS INTERAKTIF -->
+        <section id="sec-game" class="hidden space-y-8">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border-2 border-amber-100 shadow-lg">
+                <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
+                    <div>
+                        <span class="bg-amber-100 text-amber-800 font-bold px-4 py-1.5 rounded-full text-xs font-fun">Kuis Fun Game 🎮</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-slate-800 font-fun mt-1">Petualangan Detektif Sejarah</h2>
+                    </div>
+                    <div class="bg-amber-100 px-5 py-2.5 rounded-2xl border-2 border-amber-300 text-right">
+                        <span class="text-xs text-amber-900 font-bold block">Skor Kamu ⭐</span>
+                        <span id="score-display" class="text-2xl font-black text-amber-600 font-fun">0</span>
+                    </div>
+                </div>
+
+                <!-- Quiz Card -->
+                <div id="quiz-container" class="bg-gradient-to-b from-amber-50/50 to-orange-50/30 p-6 sm:p-8 rounded-3xl border-2 border-amber-200 relative shadow-inner">
+                    <div class="flex justify-between text-xs font-bold text-amber-800 mb-3 font-fun">
+                        <span id="quiz-progress">Soal 1 dari 5</span>
+                        <span id="quiz-category">Topik: Konteks Sejarah</span>
+                    </div>
+
+                    <!-- Question Text -->
+                    <h3 id="quiz-question" class="text-lg sm:text-xl font-bold text-slate-800 mb-6 font-fun">
+                        Memuat pertanyaan seru...
+                    </h3>
+
+                    <!-- Options Grid -->
+                    <div id="quiz-options" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                        <!-- Options generated dynamically -->
+                    </div>
+
+                    <!-- Feedback Box -->
+                    <div id="quiz-feedback" class="hidden p-4 rounded-2xl text-xs sm:text-sm font-semibold mb-4">
+                    </div>
+
+                    <!-- Next Button -->
+                    <div class="flex justify-end">
+                        <button id="btn-next-quiz" onclick="nextQuestion()" class="hidden bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-2xl text-xs sm:text-sm transition-all shadow-md font-fun">
+                            Soal Berikutnya 🚀
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Complete State -->
+                <div id="quiz-complete" class="hidden bg-amber-50 border-2 border-amber-300 rounded-3xl p-8 text-center space-y-4 shadow-xl">
+                    <div class="w-20 h-20 bg-amber-200 text-amber-700 rounded-full flex items-center justify-center mx-auto text-4xl shadow-inner">
+                        🏆
+                    </div>
+                    <h3 class="text-3xl font-bold text-slate-800 font-fun">Hore! Petualangan Selesai!</h3>
+                    <p class="text-slate-600 text-sm max-w-md mx-auto">
+                        Kamu berhasil menyelesaikan Kuis Detektif Sejarah dengan nilai total: <strong id="final-score" class="text-amber-600 text-2xl font-fun">0</strong>!
+                    </p>
+                    <button onclick="resetQuiz()" class="bg-amber-400 hover:bg-amber-300 text-indigo-950 font-bold px-8 py-3.5 rounded-2xl text-sm transition-all shadow-md font-fun">
+                        🔄 Mainkan Lagi
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: TANYA GURU AI -->
+        <section id="sec-tanya-guru" class="hidden space-y-8">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border-2 border-purple-100 shadow-lg">
+                <div class="flex items-center space-x-3 mb-2">
+                    <span class="bg-purple-100 text-purple-800 font-bold px-4 py-1.5 rounded-full text-xs font-fun">Asisten Belajar Smart AI 🤖</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-800 font-fun">Tanya Guru Sejarah AI</h2>
+                </div>
+                <p class="text-slate-600 text-sm mb-4">
+                    Punya rasa penasaran seputar kerajaan Hindu-Buddha? Tanyakan apapun pada Asisten Guru Sejarah AI!
+                </p>
+
+                <!-- Preset Prompt Chips -->
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <button onclick="setPrompt('Mengapa Kerajaan Sriwijaya bisa menjadi pusat pembelajaran agama Buddha di Asia Tenggara?')" class="bg-purple-50 hover:bg-purple-100 text-purple-800 text-xs px-3.5 py-2 rounded-full border border-purple-200 font-semibold transition-all">
+                        💡 Kenapa Sriwijaya terkenal?
+                    </button>
+                    <button onclick="setPrompt('Apa perbedaan Candi Hindu dan Candi Buddha secara sederhana?')" class="bg-purple-50 hover:bg-purple-100 text-purple-800 text-xs px-3.5 py-2 rounded-full border border-purple-200 font-semibold transition-all">
+                        💡 Beda Candi Hindu vs Buddha?
+                    </button>
+                    <button onclick="setPrompt('Bagaimana kisah Sumpah Palapa Gajah Mada dalam menyatukan Nusantara?')" class="bg-purple-50 hover:bg-purple-100 text-purple-800 text-xs px-3.5 py-2 rounded-full border border-purple-200 font-semibold transition-all">
+                        💡 Sumpah Palapa Majapahit
+                    </button>
+                </div>
+
+                <!-- Chat Display -->
+                <div id="chat-box" class="bg-slate-50 border-2 border-purple-100 rounded-3xl p-5 h-80 overflow-y-auto space-y-4 custom-scrollbar mb-4 text-xs sm:text-sm">
+                    <div class="bg-purple-100 text-purple-950 p-4 rounded-2xl max-w-2xl border border-purple-200">
+                        <strong>Guru Sejarah AI:</strong> Halo anak-anak hebat! Saya siap mendampingi belajarmu. Mau tanya cerita atau bagian mana yang ingin kamu pahami? 😊
+                    </div>
+                </div>
+
+                <!-- Chat Input -->
+                <div class="flex gap-2">
+                    <input type="text" id="ai-input" placeholder="Tulis pertanyaanmu di sini..." class="flex-grow p-4 rounded-2xl border-2 border-purple-200 focus:border-purple-500 outline-none text-xs sm:text-sm transition-all">
+                    <button onclick="askAI()" id="btn-ask-ai" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-4 rounded-2xl text-xs sm:text-sm transition-all shadow-md font-fun flex items-center gap-2">
+                        <span>Kirim</span>
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-indigo-950 text-indigo-200 py-8 text-center text-xs mt-12 rounded-t-3xl">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <p class="font-fun text-sm text-amber-300">Nusantara Heritage • Media Pembelajaran Sejarah SMA Kelas X</p>
+            <p class="text-indigo-300">Penerapan Pembelajaran Mendalam (Deep Learning) & Diferensiasi Peserta Didik.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL PANDUAN GURU -->
+    <div id="modal-guru" class="fixed inset-0 bg-indigo-950/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border-2 border-purple-100 space-y-4 max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="text-xl font-bold text-slate-800 font-fun flex items-center gap-2">
+                    🎓 Panduan Modul Ajar (Guru Sejarah)
+                </h3>
+                <button onclick="closeModalGuru()" class="text-slate-400 hover:text-slate-600 text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="space-y-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                <h4 class="font-bold text-indigo-900 font-fun text-base">1. Pendekatan Pembelajaran Mendalam (Deep Learning):</h4>
+                <ul class="list-disc pl-5 space-y-1">
+                    <li><strong>Mindful Learning:</strong> Mengaitkan prasasti dan candi dengan objek di sekitar murid (seperti saluran air, nama bahasa, dan bangunan).</li>
+                    <li><strong>Meaningful Learning:</strong> Menjelaskan makna di balik kebijakan raja-raja kuno serta relevance-nya dengan isu kebangsaan modern.</li>
+                    <li><strong>Joyful Learning:</strong> Pembelajaran dengan visual interaktif, kuis game, dan tanya jawab ramah bersama AI.</li>
+                </ul>
+
+                <h4 class="font-bold text-indigo-900 font-fun text-base mt-4">2. Strategi Diferensiasi Kemampuan Siswa:</h4>
+                <ul class="list-disc pl-5 space-y-1">
+                    <li><strong>Tingkat A (Visual/Awal):</strong> Tugas komik digital/infografis sederhana.</li>
+                    <li><strong>Tingkat B (Konseptual/Sedang):</strong> Skenario podcast/roleplay pasar kuno.</li>
+                    <li><strong>Tingkat C (Analitis/Mahir):</strong> Kajian kritis teks Sutasoma dan pencegahan bullying.</li>
+                </ul>
+            </div>
+
+            <div class="pt-4 border-t text-right">
+                <button onclick="closeModalGuru()" class="bg-indigo-600 text-white font-bold px-6 py-2.5 rounded-2xl text-xs font-fun">
+                    Paham, Tutup Panduan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // TAB NAVIGATION LOGIC
+        function switchTab(tabId) {
+            document.getElementById('sec-beranda').classList.add('hidden');
+            document.getElementById('sec-memahami').classList.add('hidden');
+            document.getElementById('sec-mengaplikasi').classList.add('hidden');
+            document.getElementById('sec-merefleksi').classList.add('hidden');
+            document.getElementById('sec-game').classList.add('hidden');
+            document.getElementById('sec-tanya-guru').classList.add('hidden');
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('text-indigo-100');
+            });
+
+            document.getElementById('sec-' + tabId).classList.remove('hidden');
+
+            const activeBtn = document.getElementById('tab-' + tabId);
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+                activeBtn.classList.remove('text-indigo-100');
+            }
+        }
+
+        // MODAL GURU LOGIC
+        function openModalGuru() {
+            document.getElementById('modal-guru').classList.remove('hidden');
+            document.getElementById('modal-guru').classList.add('flex');
+        }
+        function closeModalGuru() {
+            document.getElementById('modal-guru').classList.add('hidden');
+            document.getElementById('modal-guru').classList.remove('flex');
+        }
+
+        // WORKSPACE KOLABORASI LOGIC
+        function pilihTugas(jenis) {
+            document.getElementById('input-jenis-tugas').value = jenis;
+            document.getElementById('workspace-kolaborasi').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function simpanKerjaKelompok() {
+            const nama = document.getElementById('input-kelompok').value;
+            const jenis = document.getElementById('input-jenis-tugas').value;
+            const gagasan = document.getElementById('input-gagasan').value;
+
+            if(!nama || !jenis || !gagasan) {
+                alert("Mohon lengkapi Nama Kelompok, Jenis Tugas, dan Draf Gagasan terlebih dahulu ya!");
+                return;
+            }
+
+            document.getElementById('notif-simpan').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('notif-simpan').classList.add('hidden');
+            }, 5000);
+        }
+
+        function simpanRefleksi() {
+            const r1 = document.getElementById('refleksi-1').value;
+            const r2 = document.getElementById('refleksi-2').value;
+
+            if(!r1 || !r2) {
+                alert("Mohon isi kedua pertanyaan refleksi tersebut.");
+                return;
+            }
+
+            document.getElementById('notif-refleksi').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('notif-refleksi').classList.add('hidden');
+            }, 5000);
+        }
+
+        // QUIZ GAME DATA & LOGIC
+        const quizData = [
+            {
+                question: "Semboyan negara kita 'Bhinneka Tunggal Ika' berasal dari kitab sastra zaman Majapahit, yaitu...",
+                options: [
+                    "Kitab Sutasoma karya Mpu Tantular",
+                    "Kitab Negarakertagama karya Mpu Prapanca",
+                    "Kitab Arjunawiwaha karya Mpu Kanwa",
+                    "Kitab Pararaton"
+                ],
+                answer: 0,
+                explanation: "Semboyan pemersatu bangsa ditulis oleh Mpu Tantular dalam Kitab Sutasoma sebagai cermin toleransi agama pada masa Majapahit."
+            },
+            {
+                question: "Kedatuan Sriwijaya sangat disegani di seluruh Asia karena menguasai jalur perairan strategis yaitu...",
+                options: [
+                    "Selat Sunda dan Laut Jawa",
+                    "Selat Malaka dan Selat Sunda",
+                    "Selat Makassar dan Laut Banda",
+                    "Laut Flores dan Samudra Hindia"
+                ],
+                answer: 1,
+                explanation: "Selat Malaka dan Sunda adalah urat nadi pelayaran internasional kuno tempat Sriwijaya menerapkan sistem keamanan dan perdagangan maritim."
+            },
+            {
+                question: "Raja Purnawarman dari Tarumanagara membangun saluran air Gomati sepanjang 12 km. Dalam konteks modern, hal ini bertujuan...",
+                options: [
+                    "Membuat kolam renang istana raja",
+                    "Pengelolaan irigasi pertanian & pencegahan banjir",
+                    "Menyiapkan benteng perang melawan musuh",
+                    "Pusat tempat pemancingan ikan"
+                ],
+                answer: 1,
+                explanation: "Pembangunan saluran Gomati adalah bukti kecerdasan tata kelola air dan mitigasi bencana alam pada masa lalu."
+            },
+            {
+                question: "Candi Borobudur dan Candi Prambanan dibangun berdekatan di Jawa Tengah. Hal ini membuktikan bahwa...",
+                options: [
+                    "Sering terjadi bentrokan antar umat beragama",
+                    "Rakyat zaman dahulu dipaksa membangun candi",
+                    "Tingginya sikap toleransi dan keharmonisan antar penganut Hindu dan Buddha",
+                    "Hanya raja yang boleh masuk ke lokasi candi"
+                ],
+                answer: 2,
+                explanation: "Pembangunan Candi Borobudur (Buddha) dan Prambanan (Hindu) yang berdekatan membuktikan tingginya tingkat toleransi masyarakat Nusantara kuno."
+            },
+            {
+                question: "Mengapa prasasti-prasasti awal di Nusantara seperti Yupa di Kutai tertulis dalam bahasa Sanskerta?",
+                options: [
+                    "Karena bahasa Sanskerta adalah bahasa sehari-hari masyarakat umum",
+                    "Karena Sanskerta adalah bahasa suci & penghormatan di lingkungan istana dan keagamaan",
+                    "Karena diperintahkan oleh raja-raja dari Eropa",
+                    "Karena belum ada bahasa lain yang bisa ditulis"
+                ],
+                answer: 1,
+                explanation: "Bahasa Sanskerta merupakan bahasa akademis dan liturgi suci untuk mengabadikan momentum resmi kerajaan."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const q = quizData[currentQuestion];
+            document.getElementById('quiz-progress').innerText = `Soal ${currentQuestion + 1} dari ${quizData.length}`;
+            document.getElementById('quiz-question').innerText = q.question;
+
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+
+            document.getElementById('quiz-feedback').classList.add('hidden');
+            document.getElementById('btn-next-quiz').classList.add('hidden');
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-amber-200 hover:bg-amber-100 hover:border-amber-400 transition-all text-xs sm:text-sm font-semibold text-slate-700 flex items-center justify-between bg-white shadow-sm';
+                btn.innerHTML = `<span>${opt}</span> <i class="fa-regular fa-circle text-amber-300"></i>`;
+                btn.onclick = () => checkAnswer(idx, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIdx, btnElement) {
+            const q = quizData[currentQuestion];
+            const feedbackBox = document.getElementById('quiz-feedback');
+            const allButtons = document.getElementById('quiz-options').children;
+
+            for (let b of allButtons) {
+                b.disabled = true;
+                b.classList.add('cursor-not-allowed', 'opacity-70');
+            }
+
+            if (selectedIdx === q.answer) {
+                score += 20;
+                document.getElementById('score-display').innerText = score;
+                btnElement.classList.remove('hover:bg-amber-100', 'border-amber-200');
+                btnElement.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-950');
+                
+                feedbackBox.className = 'p-4 rounded-2xl text-xs sm:text-sm font-medium mb-4 bg-emerald-100 text-emerald-900 border-2 border-emerald-300 block';
+                feedbackBox.innerHTML = `🎉 <strong>Jawabanmu Hebat!</strong> ${q.explanation}`;
+            } else {
+                btnElement.classList.remove('hover:bg-amber-100', 'border-amber-200');
+                btnElement.classList.add('bg-rose-100', 'border-rose-500', 'text-rose-950');
+                
+                allButtons[q.answer].classList.add('bg-emerald-100', 'border-emerald-400');
+
+                feedbackBox.className = 'p-4 rounded-2xl text-xs sm:text-sm font-medium mb-4 bg-rose-100 text-rose-900 border-2 border-rose-300 block';
+                feedbackBox.innerHTML = `😅 <strong>Hampir Tepat!</strong> ${q.explanation}`;
+            }
+
+            document.getElementById('btn-next-quiz').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                document.getElementById('quiz-container').classList.add('hidden');
+                document.getElementById('quiz-complete').classList.remove('hidden');
+                document.getElementById('final-score').innerText = score;
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('score-display').innerText = '0';
+            document.getElementById('quiz-complete').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            loadQuestion();
+        }
+
+        // TANYA GURU AI LOGIC (GEMINI API)
+        function setPrompt(text) {
+            document.getElementById('ai-input').value = text;
+        }
+
+        async function askAI() {
+            const inputEl = document.getElementById('ai-input');
+            const userText = inputEl.value.trim();
+            if (!userText) return;
+
+            const chatBox = document.getElementById('chat-box');
+
+            const userMsgDiv = document.createElement('div');
+            userMsgDiv.className = 'bg-indigo-600 text-white p-3.5 rounded-2xl max-w-xl ml-auto text-right font-medium text-xs sm:text-sm shadow-sm';
+            userMsgDiv.innerHTML = `<strong>Kamu:</strong> ${userText}`;
+            chatBox.appendChild(userMsgDiv);
+
+            inputEl.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'bg-purple-100 text-purple-800 p-3.5 rounded-2xl max-w-xl italic text-xs sm:text-sm font-medium';
+            loadingDiv.id = 'ai-loading';
+            loadingDiv.innerHTML = `🤖 Guru AI sedang menyiapkan penjelasan terbaik...`;
+            chatBox.appendChild(loadingDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            const systemPrompt = "Kamu adalah seorang Guru Sejarah SMA Kelas X yang sangat ramah, ceria, dan interaktif. Jelaskan materi sejarah Kerajaan Hindu-Buddha di Indonesia dengan analogi kehidupan sehari-hari anak SMA, gaya bahasa yang menyenangkan, serta tekankan nilai-nilai toleransi dan kebangsaan.";
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userText }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                document.getElementById('ai-loading').remove();
+
+                const aiMsgDiv = document.createElement('div');
+                aiMsgDiv.className = 'bg-purple-100 text-purple-950 p-4 rounded-2xl max-w-2xl border border-purple-200 text-xs sm:text-sm shadow-sm';
+
+                if (result.candidates && result.candidates[0]?.content?.parts?.[0]?.text) {
+                    const aiReply = result.candidates[0].content.parts[0].text;
+                    aiMsgDiv.innerHTML = `<strong>Guru Sejarah AI:</strong><br>${aiReply.replace(/\n/g, '<br>')}`;
+                } else {
+                    aiMsgDiv.innerHTML = `<strong>Guru Sejarah AI:</strong> Maaf ya, ada kendala jaringan saat menjawab. Coba tanyakan sekali lagi ya!`;
+                }
+                chatBox.appendChild(aiMsgDiv);
+            } catch (err) {
+                if(document.getElementById('ai-loading')) {
+                    document.getElementById('ai-loading').remove();
+                }
+                const errDiv = document.createElement('div');
+                errDiv.className = 'bg-rose-100 text-rose-800 p-3.5 rounded-2xl max-w-xl text-xs sm:text-sm';
+                errDiv.innerHTML = `<strong>Sistem:</strong> Maaf, tidak dapat terhubung ke server AI saat ini. Periksa koneksi internetmu ya!`;
+                chatBox.appendChild(errDiv);
+            }
+
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        window.onload = function() {
+            loadQuestion();
+        };
+    </script>
+</body>
+</html>
